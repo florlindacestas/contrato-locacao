@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Locação Residencial - NSM Administradora</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Contrato de Locação Residencial</h1>
+            <p>Preencha os dados abaixo para gerar o contrato automaticamente</p>
+        </header>
+
+        <div class="form-section">
+            <h2>Dados do Locatário</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="locatarioNome">Nome Completo *</label>
+                    <input type="text" id="locatarioNome" placeholder="Ex: MARCELO MORALES GRAZIANO">
+                </div>
+                <div class="form-group">
+                    <label for="locatarioCPF">CPF *</label>
+                    <input type="text" id="locatarioCPF" placeholder="000.000.000-00">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="locatarioRG">RG *</label>
+                    <input type="text" id="locatarioRG" placeholder="Ex: 80058040 SPP/PR">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Dados do Imóvel</h2>
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="imovelEndereco">Endereço Completo *</label>
+                    <input type="text" id="imovelEndereco" placeholder="Rua, número, bairro">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="imovelCidade">Cidade *</label>
+                    <input type="text" id="imovelCidade" placeholder="Florianópolis">
+                </div>
+                <div class="form-group">
+                    <label for="imovelUF">UF *</label>
+                    <select id="imovelUF">
+                        <option value="SC">SC</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="imovelCidadeCadastral">Cidade Cadastral</label>
+                    <input type="text" id="imovelCidadeCadastral" placeholder="Florianópolis/SC">
+                </div>
+                <div class="form-group">
+                    <label for="imovelInscricaoCadastral">Inscrição Cadastral *</label>
+                    <input type="text" id="imovelInscricaoCadastral" placeholder="24.687.085.073-500">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="imovelCNPJ">CNPJ do Imóvel</label>
+                    <input type="text" id="imovelCNPJ" placeholder="88058-337">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Dados do Contrato</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dataAssinatura">Data de Assinatura *</label>
+                    <input type="date" id="dataAssinatura">
+                </div>
+                <div class="form-group">
+                    <label for="dataInicio">Data de Início *</label>
+                    <input type="date" id="dataInicio">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="duracaoMeses">Duração (meses) *</label>
+                    <input type="number" id="duracaoMeses" value="12" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="valorAluguel">Valor do Aluguel (R$) *</label>
+                    <input type="text" id="valorAluguel" placeholder="4.000,00">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="diaPagamento">Dia de Vencimento *</label>
+                    <select id="diaPagamento">
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="indiceReajuste">Índice de Reajuste *</label>
+                    <select id="indiceReajuste">
+                        <option value="IPCA/IGBE">IPCA/IGBE</option>
+                        <option value="IGPM">IGP-M</option>
+                        <option value="INPC">INPC</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Dados Bancários para Pagamento</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bancoNome">Banco</label>
+                    <input type="text" id="bancoNome" placeholder="Banco do Brasil">
+                </div>
+                <div class="form-group">
+                    <label for="bancoAgencia">Agência</label>
+                    <input type="text" id="bancoAgencia" placeholder="0668-0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bancoConta">Conta Corrente</label>
+                    <input type="text" id="bancoConta" placeholder="11.867-2">
+                </div>
+                <div class="form-group">
+                    <label for="bancoChavePIX">Chave PIX</label>
+                    <input type="text" id="bancoChavePIX" placeholder="484.587.839-91">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="bancoFavorecido">Favorecido</label>
+                    <input type="text" id="bancoFavorecido" placeholder="Nério Luz Wustru">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Dados das Testemunhas</h2>
+            <div class="testemunhas-grid">
+                <div class="testemunha">
+                    <h3>1ª Testemunha</h3>
+                    <div class="form-group">
+                        <label for="test1Nome">Nome</label>
+                        <input type="text" id="test1Nome" placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="test1CPF">CPF</label>
+                        <input type="text" id="test1CPF" placeholder="000.000.000-00">
+                    </div>
+                </div>
+                <div class="testemunha">
+                    <h3>2ª Testemunha</h3>
+                    <div class="form-group">
+                        <label for="test2Nome">Nome</label>
+                        <input type="text" id="test2Nome" placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="test2CPF">CPF</label>
+                        <input type="text" id="test2CPF" placeholder="000.000.000-00">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Dados do Locador (Administradora)</h2>
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label>Razão Social</label>
+                    <input type="text" value="NSW ADMINISTRADORA DE BENS LTDA" disabled>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>CNPJ</label>
+                    <input type="text" value="07.092.524/0001-77" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Representante</label>
+                    <input type="text" value="NERIO LUZ WUSTRU" disabled>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>CPF do Representante</label>
+                    <input type="text" value="454.587.839-91" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button onclick="gerarContrato()" class="btn-primary">Gerar Contrato</button>
+            <button onclick="limparFormulario()" class="btn-secondary">Limpar</button>
+        </div>
+    </div>
+
+    <div id="contratoOutput" class="contrato-container" style="display: none;">
+        <div class="contrato-actions no-print">
+            <button onclick="window.print()" class="btn-print">Imprimir / Salvar PDF</button>
+            <button onclick="voltarFormulario()" class="btn-secondary">Voltar ao Formulário</button>
+        </div>
+
+        <div class="contrato" id="contratoContent">
+            <div class="contrato-header">
+                <h1>CONTRATO DE LOCAÇÃO RESIDENCIAL</h1>
+                <p class="lei-ref">Lei Federal 8.245/1991 (Lei do Inquilinato)</p>
+            </div>
+
+            <div class="contrato-partes">
+                <div class="parte">
+                    <p class="parte-label">LOCADOR:</p>
+                    <p class="parte-dados">
+                        NSW ADMINISTRADORA DE BENS LTDA., pessoa jurídica de direito privado, inscrita no CNPJ sob o nº 07.092.524/0001-77, neste ato representada por seu representante legal, NERIO LUZ WUSTRU, brasileiro, casado, engenheiro, inscrito no CPF sob o nº 454.587.839-91, residente e domiciliado em Florianópolis/SC.
+                    </p>
+                </div>
+                <div class="parte">
+                    <p class="parte-label">LOCATÁRIO:</p>
+                    <p class="parte-dados" id="contratoLocatario"></p>
+                </div>
+                <div class="parte">
+                    <p class="parte-label">IMÓVEL:</p>
+                    <p class="parte-dados" id="contratoImovel"></p>
+                </div>
+            </div>
+
+            <p class="intro">As partes acima qualificadas contratam entre si a locação do imóvel residencial situado, na forma e condições estabelecidas no presente instrumento, a presente locação residential, bem como os seguintes cláusulas e condições:</p>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 1ª – DO OBJETO E DESTINAÇÃO</h2>
+                <p>1.1. O objeto deste contrato é a locação do imóvel residencial situado na <span id="contratoEndereco"></span>, inscrito no CNPJ sob o nº <span id="contratoCNPJ"></span>, de Inscrição Imobiliária nº <span id="contratoInscricao"></span>.</p>
+                <p>1.2. O imóvel destina-se exclusivamente para uso residencial do LOCATÁRIO e sua família, sendo vedada a mudança de destino, sublocação, cessão ou qualquer forma de transferência, total ou parcial, sem a anuência expressa por escrito do LOCADOR.</p>
+            </div>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 2ª – DO PRAZO, DA VIGÊNCIA E DO REAJUSTE</h2>
+                <p>2.1. O prazo da locação é de <span id="contratoDuracao"></span> (meses por extenso), começando a partir do dia <span id="contratoDataInicio"></span> e encerrando-se em <span id="contratoDataFim"></span>, data em que o LOCATÁRIO deverá entregar o imóvel livre e desocupado, nas condições em que o recebeu.</p>
+                <p>2.2. O valor do aluguel sofrerá reajuste anual pelo índice <span id="contratoIndice"></span>.</p>
+            </div>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 3ª – DO ALUGUEL, PAGAMENTO E PENALIDADES POR ATRASO</h2>
+                <p>3.1. O valor mensal do aluguel é de R$ <span id="contratoValorAluguel"></span> ( <span id="contratoValorAluguelExtenso"></span> ), com vencimento todo dia <span id="contratoDiaPagamento"></span> de cada mês.</p>
+
+                <div class="dados-pagamento">
+                    <p class="dados-pagamento-title">DADOS PARA PAGAMENTO:</p>
+                    <p>Favorecido / Banco do Brasil (001), Agência: <span id="contratoAgencia"></span>, Conta Corrente: <span id="contratoConta"></span></p>
+                    <p>Favorecido / Chave PIX: <span id="contratoPIX"></span> (<span id="contratoFavorecido"></span>)</p>
+                </div>
+
+                <p>3.2. Em caso de atraso no pagamento do aluguel, incidirá multa de <strong>10%</strong> (dez por cento) sobre o valor devido, acrescida de juros de mora de <strong>1%</strong> (um por cento) ao mês, como mínimo e pro rata die, até a data do efetivo pagamento.</p>
+            </div>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 4ª – DA GARANTIA LOCATÍCIA (CAUÇÃO)</h2>
+                <p>4.1. Para garantia do fiel cumprimento das obrigações assumidas neste contrato, o LOCATÁRIO presta ao LOCADOR a título de garantia o valor correspondente a <strong>1 (um) aluguel</strong>, totalizando R$ <span id="contratoValorCaucao"></span> ( <span id="contratoValorCaucaoExtenso"></span> ), entregue em espécie no ato da assinatura do contrato.</p>
+                <p>4.2. A referida garantia será restituída ao LOCATÁRIO ao término do contrato, após a desocupação do imóvel, vistoria e dedução de eventuais débitos pendentes de taxas, taxas, contribuições de serviços públicos ou reparos.</p>
+            </div>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 5ª – DAS DESPESAS, CONSUMO E UTILITIES</h2>
+                <p>5.1. A cargo do LOCATÁRIO o pagamento do IPTU (Imposto Predial e Territorial Urbano), bem como todas as despesas de consumo de energia elétrica, água, gás e taxa de lixo (se houver).</p>
+                <p>5.2. O LOCATÁRIO deverá realizar a transferência de titularidade das faturas de energia elétrica junto à CELESC (Unidade Consumidora nº <span id="contratoUCELESC"></span>) e de água junto à CASAN (Matrícula nº <span id="contratoUCASAN"></span>) em seu nome no prazo máximo de 30 (trinta) dias a partir da data da assinatura do contrato, apresentando comprovantes de conformação à locadora.</p>
+                <p>5.3. Quaisquer serviços referentes à manutenção, conservação e limpeza da fossa séptica do imóvel durante o período de locação correrão por conta e responsabilidade do LOCATÁRIO.</p>
+            </div>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 6ª – DA CONSERVAÇÃO, VISTORIA E BENFEITORIAS</h2>
+                <p>6.1. O LOCATÁRIO declara que recebeu o imóvel em perfeitas condições de habitabilidade, conforme detalhado no Laudo de Vistoria de Entrada, que integra este contrato como ANEXO I, obrigando-se a mantê-lo limpo e conservado, procedendo às pequenas reparos necessários às quais o imóvel estiver sujeito por desgaste natural.</p>
+                <p>6.2. O Laudo de Vistoria de Entrada, assinado pelas partes, faz parte integrante e indissociável deste instrumento contratual para todos os fins de direito.</p>
+                <p>6.3. Qualquer benfeitoria ou alteração na estrutura do imóvel somente poderá ser realizada mediante prévia autorização por escrito do LOCADOR, não gerando direito à retenção ou indenização, salvo disposição em contrato.</p>
+            </div>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 7ª – DAS PENALIDADES POR INFRAÇÃO RESCISÓRIA</h2>
+                <p>7.1. A infração de quaisquer das cláusulas deste contrato sujeitará o infrator a multa equivalente a <strong>3 (três)</strong> aluguéis vigentes na época, acrescida das despesas e prejuízos causados, cobrada proporcionalmente ao tempo restante do contrato.</p>
+            </div>
+
+            <div class="clausula">
+                <h2>CLÁUSULA 8ª – DO FORO</h2>
+                <p>8.1. Para dirimir quaisquer dos litígios oriundos deste contrato, as partes elegem, em comum acordo, os Foros das Comarcas de <strong>Florianópolis/SC</strong> e <strong>Xanxerê/SC</strong> renunciando a qualquer outro, por mais privilegiado que seja.</p>
+            </div>
+
+            <p class="contrato-final">E por estarem assim justos e contratados, assinam o presente instrumento em 02 (duas) vias de igual teor e forma, na presença de 02 (duas) testemunhas.</p>
+
+            <div class="local-data">
+                <p>Florianópolis/SC, <span id="contratoDataAssinatura"></span></p>
+            </div>
+
+            <div class="assinaturas">
+                <div class="assinatura-locador">
+                    <div class="linha-assinatura"></div>
+                    <p class="assinatura-titulo">NSW ADMINISTRADORA DE BENS LTDA</p>
+                    <p class="assinatura-sub">LOCADOR (Rep. por Nério Luz Wustru)</p>
+                </div>
+                <div class="assinatura-locatario">
+                    <div class="linha-assinatura"></div>
+                    <p class="assinatura-titulo" id="assinaturaLocatarioNome"></p>
+                    <p class="assinatura-sub">LOCATÁRIO (CPF: <span id="assinaturaLocatarioCPF"></span>)</p>
+                </div>
+            </div>
+
+            <div class="testemunhas-section">
+                <p class="testemunhas-titulo">TESTEMUNHAS:</p>
+                <div class="testemunhas-assinaturas">
+                    <div class="testemunha-assinatura">
+                        <div class="linha-assinatura"></div>
+                        <p>Nome: <span id="test1NomeContrato"></span></p>
+                        <p>CPF: <span id="test1CPFContrato"></span></p>
+                    </div>
+                    <div class="testemunha-assinatura">
+                        <div class="linha-assinatura"></div>
+                        <p>Nome: <span id="test2NomeContrato"></span></p>
+                        <p>CPF: <span id="test2CPFContrato"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
