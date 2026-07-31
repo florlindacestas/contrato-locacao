@@ -1,163 +1,125 @@
 function formatarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11) return cpf;
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 }
 
 function formatarData(dataStr) {
+    if (!dataStr) return '';
     const parts = dataStr.split('-');
-    const dia = parts[2];
-    const mes = parts[1];
-    const ano = parts[0];
-    return `${dia}/${mes}/${ano}`;
+    return parts[2] + '/' + parts[1] + '/' + parts[0];
 }
 
 function obterMesPorExtenso(meses) {
-    const mesesExtenso = {
-        1: 'um', 2: 'dois', 3: 'três', 4: 'quatro', 5: 'cinco',
-        6: 'seis', 7: 'sete', 8: 'oito', 9: 'nove', 10: 'dez',
-        11: 'onze', 12: 'doze', 13: 'treze', 14: 'quatorze', 15: 'quinze',
-        16: 'dezesseis', 17: 'dezessete', 18: 'dezoito', 19: 'dezenove',
-        20: 'vinte', 21: 'vinte e um', 22: 'vinte e dois', 23: 'vinte e três',
-        24: 'vinte e quatro'
-    };
-    return mesesExtenso[meses] || meses;
+    const mapa = {1:'um',2:'dois',3:'três',4:'quatro',5:'cinco',6:'seis',7:'sete',8:'oito',9:'nove',10:'dez',11:'onze',12:'doze'};
+    return mapa[meses] || meses;
 }
 
 function converterValorPorExtenso(valor) {
-    const valorNum = parseFloat(valor.replace('.', '').replace(',', '.'));
-    const inteiro = Math.floor(valorNum);
-    const centavos = Math.round((valorNum - inteiro) * 100);
+    valor = valor.replace(/[^\d,]/g, '').replace(',', '.');
+    var num = parseFloat(valor);
+    if (isNaN(num)) return 'zero reais';
 
-    function numeroPorExtenso(num) {
-        if (num === 0) return 'zero';
+    var inteiro = Math.floor(num);
+    var centavos = Math.round((num - inteiro) * 100);
 
-        const unidades = ['', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
-        const dezenas = ['', 'dez', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
-        const especiais = 'dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove';
-        const centenas = ['', 'cento', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos'];
+    var unidades = ['','um','dois','três','quatro','cinco','seis','sete','oito','nove'];
+    var dezenas = ['','dez','vinte','trinta','quarenta','cinquenta','sessenta','setenta','oitenta','noventa'];
+    var especiais = ['','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
+    var centenas = ['','cento','duzentos','trezentos','quatrocentos','quinhentos','seiscentos','setecentos','oitocentos','novecentos'];
 
-        let resultado = '';
-
-        if (num >= 1000) {
-            const milhares = Math.floor(num / 1000);
-            if (milhares === 1) {
-                resultado += 'mil';
-            } else {
-                resultado += numeroPorExtenso(milhares) + ' mil';
-            }
-            num %= 1000;
-            if (num > 0) resultado += ' e ';
+    function extenso(n) {
+        if (n === 0) return 'zero';
+        var r = '';
+        if (n >= 100) {
+            if (n === 100) return 'cem';
+            r += centenas[Math.floor(n / 100)];
+            n %= 100;
+            if (n > 0) r += ' e ';
         }
-
-        if (num >= 100) {
-            if (num === 100) {
-                resultado += 'cem';
-            } else {
-                resultado += centenas[Math.floor(num / 100)];
-            }
-            num %= 100;
-            if (num > 0) resultado += ' e ';
+        if (n >= 10 && n < 20) {
+            r += especiais[n - 10];
+        } else {
+            if (n >= 10) { r += dezenas[Math.floor(n / 10)]; n %= 10; if (n > 0) r += ' e '; }
+            if (n > 0) r += unidades[n];
         }
-
-        if (num >= 10 && num < 20) {
-            resultado += especiais[num - 10];
-        } else if (num >= 10) {
-            resultado += dezenas[Math.floor(num / 10)];
-            num %= 10;
-            if (num > 0) resultado += ' e ';
-        }
-
-        if (num > 0 && num < 10) {
-            resultado += unidades[num];
-        }
-
-        return resultado;
+        return r;
     }
 
-    let extenso = numeroPorExtenso(inteiro);
-    extenso += ' reais';
-
-    if (centavos > 0) {
-        extenso += ' e ' + numeroPorExtenso(centavos) + ' centavos';
-    }
-
-    return extenso;
-}
-
-function calcularDataFim(dataInicio, meses) {
-    const data = new Date(dataInicio);
-    data.setMonth(data.getMonth() + parseInt(meses));
-    return data;
+    var resultado = extenso(inteiro) + ' reais';
+    if (centavos > 0) resultado += ' e ' + extenso(centavos) + ' centavos';
+    return resultado;
 }
 
 function gerarContrato() {
-    const locatarioNome = document.getElementById('locatarioNome').value;
-    const locatarioCPF = document.getElementById('locatarioCPF').value;
-    const locatarioRG = document.getElementById('locatarioRG').value;
+    var locatarioNome = document.getElementById('locatarioNome').value.trim();
+    var locatarioCPF = document.getElementById('locatarioCPF').value.trim();
+    var locatarioRG = document.getElementById('locatarioRG').value.trim();
 
-    const imovelEndereco = document.getElementById('imovelEndereco').value;
-    const imovelCidade = document.getElementById('imovelCidade').value;
-    const imovelUF = document.getElementById('imovelUF').value;
-    const imovelCidadeCadastral = document.getElementById('imovelCidadeCadastral').value;
-    const imovelInscricaoCadastral = document.getElementById('imovelInscricaoCadastral').value;
-    const imovelCEP = document.getElementById('imovelCEP').value;
+    var imovelEndereco = document.getElementById('imovelEndereco').value.trim();
+    var imovelCidade = document.getElementById('imovelCidade').value.trim();
+    var imovelUF = document.getElementById('imovelUF').value;
+    var imovelCidadeCadastral = document.getElementById('imovelCidadeCadastral').value.trim();
+    var imovelInscricaoCadastral = document.getElementById('imovelInscricaoCadastral').value.trim();
+    var imovelCEP = document.getElementById('imovelCEP').value.trim();
 
-    const dataAssinatura = document.getElementById('dataAssinatura').value;
-    const dataInicio = document.getElementById('dataInicio').value;
-    const duracaoMeses = document.getElementById('duracaoMeses').value;
-    const valorAluguel = document.getElementById('valorAluguel').value;
-    const diaPagamento = document.getElementById('diaPagamento').value;
-    const indiceReajuste = document.getElementById('indiceReajuste').value;
+    var dataAssinatura = document.getElementById('dataAssinatura').value;
+    var dataInicio = document.getElementById('dataInicio').value;
+    var duracaoMeses = document.getElementById('duracaoMeses').value;
+    var valorAluguel = document.getElementById('valorAluguel').value.trim();
+    var diaPagamento = document.getElementById('diaPagamento').value;
+    var indiceReajuste = document.getElementById('indiceReajuste').value;
 
-    const bancoAgencia = document.getElementById('bancoAgencia').value;
-    const bancoConta = document.getElementById('bancoConta').value;
-    const bancoPIX = document.getElementById('bancoChavePIX').value;
-    const bancoFavorecido = document.getElementById('bancoFavorecido').value;
+    var bancoAgencia = document.getElementById('bancoAgencia').value;
+    var bancoConta = document.getElementById('bancoConta').value;
+    var bancoPIX = document.getElementById('bancoChavePIX').value;
+    var bancoFavorecido = document.getElementById('bancoFavorecido').value;
 
-    const test1Nome = document.getElementById('test1Nome').value;
-    const test1CPF = document.getElementById('test1CPF').value;
-    const test2Nome = document.getElementById('test2Nome').value;
-    const test2CPF = document.getElementById('test2CPF').value;
+    var test1Nome = document.getElementById('test1Nome').value;
+    var test1CPF = document.getElementById('test1CPF').value;
+    var test2Nome = document.getElementById('test2Nome').value;
+    var test2CPF = document.getElementById('test2CPF').value;
 
     if (!locatarioNome || !locatarioCPF || !locatarioRG) {
-        alert('Por favor, preencha todos os dados do locatário.');
+        alert('Preencha os dados do Locatário (Nome, CPF e RG).');
+        return;
+    }
+    if (!imovelEndereco || !imovelCidade) {
+        alert('Preencha os dados do Imóvel (Endereço e Cidade).');
+        return;
+    }
+    if (!valorAluguel) {
+        alert('Preencha o valor do aluguel.');
         return;
     }
 
-    if (!imovelEndereco || !imovelCidade || !imovelInscricaoCadastral) {
-        alert('Por favor, preencha todos os dados do imóvel.');
-        return;
-    }
+    var cidadeCadastral = imovelCidadeCadastral || imovelCidade.toUpperCase();
 
-    if (!dataAssinatura || !dataInicio || !valorAluguel) {
-        alert('Por favor, preencha todos os dados do contrato.');
-        return;
-    }
+    document.getElementById('contratoLocatario').innerHTML =
+        locatarioNome.toUpperCase() + ', brasileiro, portador do RG nº ' + locatarioRG + ', inscrito no CPF sob o nº ' + formatarCPF(locatarioCPF) + '.';
 
-    const valorAluguelFormatado = valorAluguel;
-    const valorAluguelExtenso = converterValorPorExtenso(valorAluguel);
+    document.getElementById('contratoImovel').innerHTML =
+        'Imóvel residencial localizado na ' + imovelEndereco.toUpperCase() + ', ' + cidadeCadastral + '/' + imovelUF + (imovelCEP ? ' - CEP ' + imovelCEP : '') + (imovelInscricaoCadastral ? ' (Inscrição Imobiliária nº ' + imovelInscricaoCadastral + ')' : '') + '.';
 
-    document.getElementById('contratoLocatario').innerHTML = 
-        `${locatarioNome.toUpperCase()}, brasileiro, portador do RG nº ${locatarioRG}, inscrito no CPF sob o nº ${formatarCPF(locatarioCPF)}.`;
+    document.getElementById('contratoEndereco').innerHTML =
+        '<strong>' + imovelEndereco.toUpperCase() + '</strong>, ' + cidadeCadastral + '/' + imovelUF;
 
-    document.getElementById('contratoImovel').innerHTML = 
-        `Imóvel residencial localizado na ${imovelEndereco.toUpperCase()}, ${imovelCidadeCadastral || imovelCidade.toUpperCase()}/${imovelUF} - CEP ${imovelCEP} (Inscrição Imobiliária nº ${imovelInscricaoCadastral}).`;
+    var elCEP = document.getElementById('contratoCEP');
+    if (elCEP) elCEP.textContent = imovelCEP || '___________';
 
-    document.getElementById('contratoEndereco').innerHTML = 
-        `<strong>${imovelEndereco.toUpperCase()}</strong>, ${imovelCidadeCadastral || imovelCidade.toUpperCase()}/${imovelUF}`;
+    var elInscricao = document.getElementById('contratoInscricao');
+    if (elInscricao) elInscricao.textContent = imovelInscricaoCadastral || '___________';
 
-    document.getElementById('contratoCEP').textContent = imovelCEP;
-    document.getElementById('contratoInscricao').textContent = imovelInscricaoCadastral;
-    document.getElementById('contratoDuracao').textContent = `${duracaoMeses} (${obterMesPorExtenso(parseInt(duracaoMeses))})`;
+    document.getElementById('contratoDuracao').textContent = duracaoMeses + ' (' + obterMesPorExtenso(parseInt(duracaoMeses)) + ')';
     document.getElementById('contratoDataInicio').textContent = formatarData(dataInicio);
 
-    const dataFim = calcularDataFim(dataInicio, duracaoMeses);
-    const dataFimFormatada = formatarData(dataFim.toISOString().split('T')[0]);
-    document.getElementById('contratoDataFim').textContent = dataFimFormatada;
+    var dataFim = new Date(dataInicio);
+    dataFim.setMonth(dataFim.getMonth() + parseInt(duracaoMeses));
+    document.getElementById('contratoDataFim').textContent = formatarData(dataFim.toISOString().split('T')[0]);
 
     document.getElementById('contratoIndice').textContent = indiceReajuste;
-    document.getElementById('contratoValorAluguel').textContent = valorAluguelFormatado;
-    document.getElementById('contratoValorAluguelExtenso').textContent = valorAluguelExtenso;
+    document.getElementById('contratoValorAluguel').textContent = valorAluguel;
+    document.getElementById('contratoValorAluguelExtenso').textContent = converterValorPorExtenso(valorAluguel);
     document.getElementById('contratoDiaPagamento').textContent = diaPagamento;
 
     document.getElementById('contratoAgencia').textContent = bancoAgencia;
@@ -165,21 +127,20 @@ function gerarContrato() {
     document.getElementById('contratoPIX').textContent = bancoPIX;
     document.getElementById('contratoFavorecido').textContent = bancoFavorecido;
 
-    const valorCaucao = valorAluguel;
-    document.getElementById('contratoValorCaucao').textContent = valorCaucao;
-    document.getElementById('contratoValorCaucaoExtenso').textContent = converterValorPorExtenso(valorCaucao);
+    document.getElementById('contratoValorCaucao').textContent = valorAluguel;
+    document.getElementById('contratoValorCaucaoExtenso').textContent = converterValorPorExtenso(valorAluguel);
 
     document.getElementById('contratoDataAssinatura').textContent = formatarData(dataAssinatura);
 
     document.getElementById('assinaturaLocatarioNome').textContent = locatarioNome.toUpperCase();
     document.getElementById('assinaturaLocatarioCPF').textContent = formatarCPF(locatarioCPF);
 
-    document.getElementById('test1NomeContrato').textContent = test1Nome;
-    document.getElementById('test1CPFContrato').textContent = test1CPF ? formatarCPF(test1CPF) : '';
-    document.getElementById('test2NomeContrato').textContent = test2Nome;
-    document.getElementById('test2CPFContrato').textContent = test2CPF ? formatarCPF(test2CPF) : '';
+    document.getElementById('test1NomeContrato').textContent = test1Nome || '_______________________';
+    document.getElementById('test1CPFContrato').textContent = test1CPF ? formatarCPF(test1CPF) : '_____________';
+    document.getElementById('test2NomeContrato').textContent = test2Nome || '_______________________';
+    document.getElementById('test2CPFContrato').textContent = test2CPF ? formatarCPF(test2CPF) : '_____________';
 
-    document.querySelectorAll('.form-section, header, .btn-group').forEach(el => {
+    document.querySelectorAll('.form-section, header, .btn-group').forEach(function(el) {
         el.style.display = 'none';
     });
     document.getElementById('contratoOutput').style.display = 'block';
@@ -187,18 +148,17 @@ function gerarContrato() {
 }
 
 function voltarFormulario() {
-    document.querySelectorAll('.form-section, header, .btn-group').forEach(el => {
+    document.querySelectorAll('.form-section, header, .btn-group').forEach(function(el) {
         el.style.display = '';
     });
     document.getElementById('contratoOutput').style.display = 'none';
+    window.scrollTo(0, 0);
 }
 
 function limparFormulario() {
     if (confirm('Deseja realmente limpar todos os campos?')) {
-        document.querySelectorAll('input[type="text"], input[type="date"], input[type="number"]').forEach(input => {
-            if (!input.disabled) {
-                input.value = '';
-            }
+        document.querySelectorAll('input[type="text"], input[type="date"], input[type="number"]').forEach(function(input) {
+            if (!input.disabled) input.value = '';
         });
         document.getElementById('duracaoMeses').value = '12';
         document.getElementById('diaPagamento').value = '1';
@@ -208,46 +168,44 @@ function limparFormulario() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const cpfInputs = ['locatarioCPF', 'test1CPF', 'test2CPF'];
-    cpfInputs.forEach(id => {
-        const input = document.getElementById(id);
+    ['locatarioCPF', 'test1CPF', 'test2CPF'].forEach(function(id) {
+        var input = document.getElementById(id);
         if (input) {
             input.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.length > 11) value = value.slice(0, 11);
-                if (value.length > 9) {
-                    value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-                } else if (value.length > 6) {
-                    value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-                } else if (value.length > 3) {
-                    value = value.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-                }
-                e.target.value = value;
+                var v = e.target.value.replace(/\D/g, '');
+                if (v.length > 11) v = v.slice(0, 11);
+                if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+                else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+                else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+                e.target.value = v;
             });
         }
     });
 
-    const valorInput = document.getElementById('valorAluguel');
+    var valorInput = document.getElementById('valorAluguel');
     if (valorInput) {
         valorInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 0) {
-                const num = parseInt(value) / 100;
-                value = num.toLocaleString('pt-BR', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                });
+            var v = e.target.value.replace(/\D/g, '');
+            if (v.length > 0) {
+                var num = parseInt(v) / 100;
+                e.target.value = num.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             }
-            e.target.value = value;
         });
     }
 
-    const dataInputs = ['dataAssinatura', 'dataInicio'];
-    dataInputs.forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-            const today = new Date().toISOString().split('T')[0];
-            input.value = input.value || today;
+    var cepInput = document.getElementById('imovelCEP');
+    if (cepInput) {
+        cepInput.addEventListener('input', function(e) {
+            var v = e.target.value.replace(/\D/g, '');
+            if (v.length > 5) v = v.replace(/(\d{5})(\d{1,3})/, '$1-$2');
+            e.target.value = v;
+        });
+    }
+
+    ['dataAssinatura', 'dataInicio'].forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input && !input.value) {
+            input.value = new Date().toISOString().split('T')[0];
         }
     });
 });
