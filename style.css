@@ -379,6 +379,11 @@ header p {
    ============================================ */
 
 @media print {
+    @page {
+        size: A4;
+        margin: 20mm 25mm;
+    }
+
     .no-print {
         display: none !important;
     }
@@ -390,28 +395,125 @@ header p {
 
     .contrato {
         box-shadow: none;
-        padding: 50px 60px;
-        font-size: 11pt;
+        padding: 0;
+        font-size: 10pt;
+        line-height: 1.4;
     }
 
     body {
         background: white;
+        margin: 0;
+        padding: 0;
+    }
+
+    .contrato-header {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
     }
 
     .contrato-header h1 {
-        font-size: 14pt;
+        font-size: 13pt;
+        margin-bottom: 5px;
     }
 
-    .clausula h2 {
-        font-size: 10pt;
+    .contrato-header .lei-ref {
+        font-size: 9pt;
     }
 
-    .clausula p {
-        font-size: 10pt;
+    .contrato-partes {
+        margin-bottom: 15px;
+    }
+
+    .parte {
+        margin-bottom: 8px;
+    }
+
+    .parte-label {
+        font-size: 9pt;
+        margin-bottom: 2px;
     }
 
     .parte-dados {
-        font-size: 10pt;
+        font-size: 9pt;
+        line-height: 1.4;
+    }
+
+    .intro {
+        font-size: 9pt;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+
+    .clausula {
+        margin-bottom: 12px;
+    }
+
+    .clausula h2 {
+        font-size: 9pt;
+        margin-bottom: 6px;
+        padding-bottom: 3px;
+    }
+
+    .clausula p {
+        font-size: 9pt;
+        line-height: 1.4;
+        margin-bottom: 5px;
+        text-indent: 15px;
+    }
+
+    .dados-pagamento {
+        padding: 8px 10px;
+        margin: 8px 0;
+    }
+
+    .dados-pagamento-title {
+        font-size: 8pt;
+        margin-bottom: 4px !important;
+    }
+
+    .dados-pagamento p {
+        font-size: 8pt;
+        margin-bottom: 2px !important;
+    }
+
+    .contrato-final {
+        font-size: 9pt;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .local-data {
+        font-size: 9pt;
+        margin-bottom: 25px;
+    }
+
+    .linha-assinatura {
+        height: 35px;
+    }
+
+    .assinatura-titulo {
+        font-size: 8pt;
+    }
+
+    .assinatura-sub {
+        font-size: 7pt;
+    }
+
+    .testemunhas-section {
+        margin-top: 25px;
+    }
+
+    .testemunhas-titulo {
+        font-size: 9pt;
+        margin-bottom: 15px;
+    }
+
+    .testemunha-assinatura .linha-assinatura {
+        height: 25px;
+    }
+
+    .testemunha-assinatura p {
+        font-size: 7pt;
     }
 }
 
