@@ -179,12 +179,17 @@ function gerarContrato() {
     document.getElementById('test2NomeContrato').textContent = test2Nome;
     document.getElementById('test2CPFContrato').textContent = test2CPF ? formatarCPF(test2CPF) : '';
 
-    document.querySelector('.form-section').parentElement.style.display = 'none';
+    document.querySelectorAll('.form-section, header, .btn-group').forEach(el => {
+        el.style.display = 'none';
+    });
     document.getElementById('contratoOutput').style.display = 'block';
+    window.scrollTo(0, 0);
 }
 
 function voltarFormulario() {
-    document.querySelector('.form-section').parentElement.style.display = 'block';
+    document.querySelectorAll('.form-section, header, .btn-group').forEach(el => {
+        el.style.display = '';
+    });
     document.getElementById('contratoOutput').style.display = 'none';
 }
 
