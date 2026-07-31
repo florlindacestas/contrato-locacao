@@ -16,38 +16,66 @@ function obterMesPorExtenso(meses) {
 }
 
 function converterValorPorExtenso(valor) {
-    valor = valor.replace(/[^\d,]/g, '').replace(',', '.');
-    var num = parseFloat(valor);
-    if (isNaN(num)) return 'zero reais';
+    if (!valor || valor.trim() === '') return 'zero reais';
+
+    var limpo = valor.toString().replace(/[^\d]/g, '');
+    if (limpo === '') return 'zero reais';
+
+    var num = parseFloat(limpo) / 100;
+    if (isNaN(num) || num === 0) return 'zero reais';
 
     var inteiro = Math.floor(num);
     var centavos = Math.round((num - inteiro) * 100);
 
-    var unidades = ['','um','dois','três','quatro','cinco','seis','sete','oito','nove'];
+    var unidades = ['','um','dois','tres','quatro','cinco','seis','sete','oito','nove'];
     var dezenas = ['','dez','vinte','trinta','quarenta','cinquenta','sessenta','setenta','oitenta','noventa'];
     var especiais = ['','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
     var centenas = ['','cento','duzentos','trezentos','quatrocentos','quinhentos','seiscentos','setecentos','oitocentos','novecentos'];
 
     function extenso(n) {
-        if (n === 0) return 'zero';
+        if (n === 0) return '';
         var r = '';
-        if (n >= 100) {
-            if (n === 100) return 'cem';
-            r += centenas[Math.floor(n / 100)];
-            n %= 100;
-            if (n > 0) r += ' e ';
+        var milhar = Math.floor(n / 1000);
+        var resto = n % 1000;
+
+        if (milhar > 0) {
+            if (milhar === 1) {
+                r += 'mil';
+            } else {
+                r += extenso(milhar) + ' mil';
+            }
+            if (resto > 0) r += ' e ';
         }
-        if (n >= 10 && n < 20) {
-            r += especiais[n - 10];
+
+        if (resto >= 100) {
+            if (resto === 100) {
+                r += 'cem';
+                return r;
+            }
+            r += centenas[Math.floor(resto / 100)];
+            resto %= 100;
+            if (resto > 0) r += ' e ';
+        }
+
+        if (resto >= 10 && resto < 20) {
+            r += especiais[resto - 10];
         } else {
-            if (n >= 10) { r += dezenas[Math.floor(n / 10)]; n %= 10; if (n > 0) r += ' e '; }
-            if (n > 0) r += unidades[n];
+            if (resto >= 10) {
+                r += dezenas[Math.floor(resto / 10)];
+                resto %= 10;
+                if (resto > 0) r += ' e ';
+            }
+            if (resto > 0) {
+                r += unidades[resto];
+            }
         }
         return r;
     }
 
     var resultado = extenso(inteiro) + ' reais';
-    if (centavos > 0) resultado += ' e ' + extenso(centavos) + ' centavos';
+    if (centavos > 0) {
+        resultado += ' e ' + extenso(centavos) + ' centavos';
+    }
     return resultado;
 }
 
@@ -119,7 +147,7 @@ function gerarContrato() {
 
     document.getElementById('contratoIndice').textContent = indiceReajuste;
     document.getElementById('contratoValorAluguel').textContent = valorAluguel;
-    document.getElementById('contratoValorAluguelExtenso').textContent = valorAluguel;
+    document.getElementById('contratoValorAluguelExtenso').textContent = converterValorPorExtenso(valorAluguel);
     document.getElementById('contratoDiaPagamento').textContent = diaPagamento;
 
     document.getElementById('contratoAgencia').textContent = bancoAgencia;
@@ -128,7 +156,7 @@ function gerarContrato() {
     document.getElementById('contratoFavorecido').textContent = bancoFavorecido;
 
     document.getElementById('contratoValorCaucao').textContent = valorAluguel;
-    document.getElementById('contratoValorCaucaoExtenso').textContent = valorAluguel;
+    document.getElementById('contratoValorCaucaoExtenso').textContent = converterValorPorExtenso(valorAluguel);
 
     document.getElementById('contratoDataAssinatura').textContent = formatarData(dataAssinatura);
 
