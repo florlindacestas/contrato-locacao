@@ -119,7 +119,7 @@ function gerarContrato() {
 
     document.getElementById('contratoIndice').textContent = indiceReajuste;
     document.getElementById('contratoValorAluguel').textContent = valorAluguel;
-    document.getElementById('contratoValorAluguelExtenso').textContent = converterValorPorExtenso(valorAluguel);
+    document.getElementById('contratoValorAluguelExtenso').textContent = valorAluguel;
     document.getElementById('contratoDiaPagamento').textContent = diaPagamento;
 
     document.getElementById('contratoAgencia').textContent = bancoAgencia;
@@ -128,7 +128,7 @@ function gerarContrato() {
     document.getElementById('contratoFavorecido').textContent = bancoFavorecido;
 
     document.getElementById('contratoValorCaucao').textContent = valorAluguel;
-    document.getElementById('contratoValorCaucaoExtenso').textContent = converterValorPorExtenso(valorAluguel);
+    document.getElementById('contratoValorCaucaoExtenso').textContent = valorAluguel;
 
     document.getElementById('contratoDataAssinatura').textContent = formatarData(dataAssinatura);
 
