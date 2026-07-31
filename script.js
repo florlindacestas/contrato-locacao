@@ -100,7 +100,7 @@ function gerarContrato() {
     const imovelUF = document.getElementById('imovelUF').value;
     const imovelCidadeCadastral = document.getElementById('imovelCidadeCadastral').value;
     const imovelInscricaoCadastral = document.getElementById('imovelInscricaoCadastral').value;
-    const imovelCNPJ = document.getElementById('imovelCNPJ').value;
+    const imovelCEP = document.getElementById('imovelCEP').value;
 
     const dataAssinatura = document.getElementById('dataAssinatura').value;
     const dataInicio = document.getElementById('dataInicio').value;
@@ -141,12 +141,12 @@ function gerarContrato() {
         `${locatarioNome.toUpperCase()}, brasileiro, portador do RG nº ${locatarioRG}, inscrito no CPF sob o nº ${formatarCPF(locatarioCPF)}.`;
 
     document.getElementById('contratoImovel').innerHTML = 
-        `Imóvel residencial localizado na ${imovelEndereco.toUpperCase()}, ${imovelCidadeCadastral || imovelCidade.toUpperCase()}/${imovelUF} - CNPJ ${imovelCNPJ} (Inscrição Imobiliária nº ${imovelInscricaoCadastral}).`;
+        `Imóvel residencial localizado na ${imovelEndereco.toUpperCase()}, ${imovelCidadeCadastral || imovelCidade.toUpperCase()}/${imovelUF} - CEP ${imovelCEP} (Inscrição Imobiliária nº ${imovelInscricaoCadastral}).`;
 
     document.getElementById('contratoEndereco').innerHTML = 
         `<strong>${imovelEndereco.toUpperCase()}</strong>, ${imovelCidadeCadastral || imovelCidade.toUpperCase()}/${imovelUF}`;
 
-    document.getElementById('contratoCNPJ').textContent = imovelCNPJ;
+    document.getElementById('contratoCEP').textContent = imovelCEP;
     document.getElementById('contratoInscricao').textContent = imovelInscricaoCadastral;
     document.getElementById('contratoDuracao').textContent = `${duracaoMeses} (${obterMesPorExtenso(parseInt(duracaoMeses))})`;
     document.getElementById('contratoDataInicio').textContent = formatarData(dataInicio);
